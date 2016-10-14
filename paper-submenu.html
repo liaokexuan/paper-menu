@@ -131,9 +131,9 @@ item has bolded text. Please see the `<paper-menu>` docs for which attributes
        * Expand the submenu content.
        */
       open: function() {
-        if (!this.disabled && !this._active) {
+        if (!this.disabled && !this.opened) {
           this.$.collapse.show();
-          this._active = true;
+          this.opened = true;
           this.__trigger && this.__trigger.classList.add('iron-selected');
           this.__content && this.__content.focus();
         }
@@ -143,9 +143,9 @@ item has bolded text. Please see the `<paper-menu>` docs for which attributes
        * Collapse the submenu content.
        */
       close: function() {
-        if (this._active) {
+        if (this.opened) {
           this.$.collapse.hide();
-          this._active = false;
+          this.opened = false;
           this.__trigger && this.__trigger.classList.remove('iron-selected');
         }
       },
@@ -154,7 +154,7 @@ item has bolded text. Please see the `<paper-menu>` docs for which attributes
        * Toggle the submenu.
        */
       toggle: function() {
-        if (this._active) {
+        if (this.opened) {
           this.close();
         } else {
           this.open();
@@ -206,7 +206,7 @@ item has bolded text. Please see the `<paper-menu>` docs for which attributes
        */
       _disabledChanged: function(disabled) {
         Polymer.IronControlState._disabledChanged.apply(this, arguments);
-        if (disabled && this._active) {
+        if (disabled && this.opened) {
           this.close();
         }
       },
